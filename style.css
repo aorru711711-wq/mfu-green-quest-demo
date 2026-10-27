@@ -1,0 +1,84 @@
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#2e7d32;--g2:#43a047;--bg:#f4f8f2;--ink:#1f2a22;--muted:#5f6b62}
+html,body{height:100%}
+body{font-family:Poppins,"Noto Sans Thai","Noto Sans",system-ui,sans-serif;background:#dfe7dc;color:var(--ink);display:flex;justify-content:center}
+#app{width:100%;max-width:430px;min-height:100vh;background:var(--bg);position:relative;padding-bottom:76px}
+header.top{padding:18px 20px 8px}
+header.top p{font-size:13px;color:var(--muted)}
+header.top h1{font-size:22px;color:#1b5e20;line-height:1.2}
+.demo-flag{display:none;margin:6px 16px 0;background:#fff3cd;border:1px solid #e0b84a;color:#6b4e00;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:600;text-align:center}
+body.demo .demo-flag{display:block}
+.card{background:#fff;border-radius:16px;margin:10px 16px;padding:13px 15px;box-shadow:0 2px 6px rgba(0,0,0,.07)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.small{font-size:12px;color:var(--muted)}
+.bar{height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;margin-top:7px}
+.bar i{display:block;height:100%;background:var(--g2);transition:width .4s}
+.btn{display:block;width:calc(100% - 32px);margin:12px 16px;border:none;border-radius:26px;padding:13px;font:inherit;font-weight:600;font-size:15px;background:var(--g);color:#fff;cursor:pointer;text-align:center}
+.btn.out{background:#fff;color:var(--g);border:2px solid var(--g)}
+.btn.grey{background:#e6ebe5;color:#333}
+.btn:disabled{opacity:.5}
+.link{background:none;border:none;color:#c62828;font:inherit;font-size:12px;display:block;margin:2px auto 10px;cursor:pointer}
+.screen{display:none}.screen.on{display:block}
+nav{position:fixed;bottom:0;width:100%;max-width:430px;height:66px;background:#fff;border-top:1px solid #dde3dc;display:flex;justify-content:space-around;align-items:center;z-index:5}
+nav button{background:none;border:none;font:inherit;font-size:11px;color:#777;cursor:pointer;width:25%}
+nav button b{display:block;font-size:19px}
+nav button.on{color:var(--g);font-weight:600}
+.pet{display:flex;align-items:center;gap:12px;background:#e8f5e9}
+.pet svg{flex-shrink:0}
+.quest .row b{font-size:14px}
+.xp{color:var(--g);font-weight:600;font-size:13px}
+.done{color:var(--g);font-size:12px}
+/* scan */
+#s-scan{background:#1e2a22;min-height:calc(100vh - 66px);color:#fff}
+#s-scan header.top h1{color:#fff}#s-scan header.top p{color:#c8e6c9}
+.viewer{margin:8px 24px;height:360px;border-radius:20px;background:linear-gradient(160deg,#5d6d63,#33413a);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.viewer img{max-width:100%;max-height:100%;object-fit:contain}
+.viewer .corner{position:absolute;width:34px;height:34px;border:4px solid #fff}
+.c1{left:16px;top:16px;border-right:none!important;border-bottom:none!important}
+.c2{right:16px;top:16px;border-left:none!important;border-bottom:none!important}
+.c3{left:16px;bottom:16px;border-right:none!important;border-top:none!important}
+.c4{right:16px;bottom:16px;border-left:none!important;border-top:none!important}
+.hint{text-align:center;color:#c8e6c9;font-size:13px;margin:10px 20px}
+.pill{display:inline-block;background:rgba(255,255,255,.14);color:#fff;font-size:12px;padding:5px 12px;border-radius:12px}
+.center{text-align:center}
+.shutter{display:flex;justify-content:center;margin:12px 0}
+.shutter label{width:78px;height:78px;border-radius:50%;border:5px solid #fff;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.shutter label span{width:60px;height:60px;border-radius:50%;background:#66bb6a}
+#file{position:absolute;left:-9999px}
+.spinner{display:none;margin:10px auto;width:34px;height:34px;border:4px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}
+.busy .spinner{display:block}
+.busytext{display:none;margin:0 20px;font-size:13px;color:#c8e6c9}
+.busy .busytext{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err{background:#ffebee;color:#b71c1c;border-radius:12px;margin:10px 20px;padding:10px 12px;font-size:13px;display:none}
+/* result */
+.binbox{margin:10px 16px;border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:14px}
+.binbox svg{flex-shrink:0}
+.binbox .big{font-size:21px;font-weight:700;line-height:1.15}
+.b-recyclable{background:#fdd835;color:#3e2723}
+.b-organic{background:#43a047;color:#fff}
+.b-general{background:#1e88e5;color:#fff}
+.b-hazardous{background:#e53935;color:#fff}
+.partlist li{list-style:none;display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #eee;font-size:13px}
+.partlist li:last-child{border:none}
+.dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.why{background:#e8f5e9}
+.low{background:#fff8e1;border:1px solid #ffcc80}
+/* leaderboard */
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:10px;padding:6px 16px 0;text-align:center;font-size:12px}
+.podium div div{width:88px;border-radius:10px 10px 0 0;padding-top:8px}
+.lb li{list-style:none;display:flex;align-items:center;gap:10px;font-size:14px;padding:8px 4px;border-bottom:1px solid #eee}
+.lb li:last-child{border:none}
+.lb .n{width:26px;height:26px;border-radius:50%;background:#e0e0e0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.lb li.me{background:#e8f5e9;border-radius:10px}
+.lb li.me .n{background:var(--g2);color:#fff}
+.tag{font-size:10px;background:#eee;border-radius:8px;padding:2px 7px;color:#555}
+/* forms */
+label.f{display:block;font-size:13px;font-weight:600;margin:10px 0 4px}
+input[type=text],input[type=password],select{width:100%;padding:10px 12px;border:1px solid #cfd8cc;border-radius:10px;font:inherit;font-size:14px;background:#fff}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:13px;margin:8px 0}
+.check input{margin-top:3px;width:18px;height:18px;flex-shrink:0}
+.consent li{font-size:13px;margin:0 0 6px 18px}
+.toast{position:fixed;left:50%;bottom:86px;transform:translateX(-50%);background:#1b5e20;color:#fff;padding:10px 16px;border-radius:20px;font-size:13px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9}
+.toast.on{opacity:1}
+body.noconsent nav{display:none}

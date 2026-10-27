@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2e7d32">
+<title>MFU Green Quest (prototype)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="noconsent">
+<div id="app">
+<div class="demo-flag">DEMO MODE: answers are sample data, not from Gemini</div>
+
+<!-- CONSENT / PDPA -->
+<section class="screen" id="s-consent">
+ <header class="top"><p>Welcome to</p><h1>MFU Green Quest</h1></header>
+ <div class="card">
+  <b>Before you start (PDPA notice)</b>
+  <ul class="consent" style="margin-top:8px">
+   <li>You take a photo of <b>trash only</b>. Please don't include people or faces.</li>
+   <li>The photo is sent to Google Gemini to get the answer, then removed from the app. We never save photos.</li>
+   <li>We keep only: your nickname, dorm, points and quest progress, on <b>this phone</b> (localStorage).</li>
+   <li>The leaderboard shows nicknames and dorms, never real names or student IDs.</li>
+   <li>You can delete all your data any time in Settings.</li>
+  </ul>
+  <label class="f" for="nick">Nickname (not your real name)</label>
+  <input type="text" id="nick" maxlength="16" placeholder="e.g. Mint">
+  <label class="f" for="dorm">Your dorm</label>
+  <select id="dorm"></select>
+  <label class="check"><input type="checkbox" id="agree"> I understand and agree to the points above.</label>
+  <button class="btn" id="btn-consent" disabled style="width:100%;margin:10px 0 0">Start</button>
+ </div>
+</section>
+
+<!-- HOME -->
+<section class="screen" id="s-home">
+ <header class="top"><p id="hello">Hi 👋</p><h1>MFU Green Quest</h1></header>
+ <div class="card pet">
+  <svg width="64" height="64" viewBox="0 0 64 64" aria-label="Nong Hom mascot"><circle cx="32" cy="38" r="22" fill="#81c784" /><circle cx="24" cy="34" r="3" fill="#1b5e20" /><circle cx="40" cy="34" r="3" fill="#1b5e20" /><path d="M25 44 Q32 50 39 44" stroke="#1b5e20" stroke-width="2.5" fill="none" /><path d="M32 16 C26 4 14 8 18 16 C22 20 30 18 32 16Z" fill="#388e3c" /><path d="M32 16 C38 4 50 8 46 16 C42 20 34 18 32 16Z" fill="#66bb6a" /></svg>
+  <div style="flex:1"><b id="lvl">Nong Hom · Level 1</b><div class="small" id="xptext">0 / 100 Eco-XP</div><div class="bar"><i id="xpbar" style="width:0"></i></div></div>
+ </div>
+ <div class="card row" style="font-size:13px"><span>🏠 Your dorm: <b id="mydorm">-</b></span><span>Rank <b id="myrank" style="color:var(--g)">-</b></span></div>
+ <div style="padding:8px 20px 0;font-weight:600">Today's quests</div>
+ <div id="quests"></div>
+ <div class="card small" id="todayxp">Today: 0 / 100 XP (daily limit)</div>
+ <button class="btn" data-go="scan">📷 Scan my trash</button>
+</section>
+
+<!-- SCAN -->
+<section class="screen" id="s-scan">
+ <header class="top"><p>Step 1</p><h1>Scan your trash</h1></header>
+ <div class="viewer" id="viewer">
+  <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+  <img id="preview" alt="" hidden>
+  <span id="ph" style="color:#c8e6c9;font-size:13px">No photo yet</span>
+ </div>
+ <p class="hint">Point the camera at the item only. No faces, please 🙂</p>
+ <p class="center"><span class="pill">🔒 Photo is not saved. It is removed after the answer.</span></p>
+ <div class="shutter"><label for="file" title="Take or choose a photo"><span></span></label></div>
+ <input type="file" id="file" accept="image/*" capture="environment">
+ <div class="spinner"></div>
+ <p class="busytext center" id="busytext" aria-live="polite"></p>
+ <div class="err" id="scanerr"></div>
+ <button class="btn" id="btn-analyze" disabled>Which bin? ✨</button>
+</section>
+
+<!-- RESULT -->
+<section class="screen" id="s-result">
+ <header class="top"><p>Result</p><h1>Which bin?</h1></header>
+ <div id="resultbody"></div>
+</section>
+
+<!-- LEADERBOARD -->
+<section class="screen" id="s-board">
+ <header class="top"><p>This week · resets Monday</p><h1>Dorm Leaderboard</h1></header>
+ <p class="center" style="margin-top:-4px"><span class="tag">Other dorms' points are EXAMPLE data for this prototype</span></p>
+ <div class="podium" id="podium"></div>
+ <div class="card"><ul class="lb" id="lb"></ul></div>
+ <div class="card small" id="mypart"></div>
+ <p class="small center" style="margin:0 20px">Shop perks: coming later (partner shops not confirmed yet).</p>
+</section>
+
+<!-- SETTINGS -->
+<section class="screen" id="s-settings">
+ <header class="top"><p>Me</p><h1>Settings</h1></header>
+ <div class="card">
+  <b>Gemini API key</b>
+  <p class="small" style="margin-top:4px">Get a free key at aistudio.google.com → "Get API key". The key is saved only in this browser (localStorage) and sent only to Google's Gemini API.</p>
+  <label class="f" for="key">API key</label>
+  <input type="password" id="key" placeholder="Paste your key here" autocomplete="off">
+  <label class="f" for="model">Model</label>
+  <input type="text" id="model">
+  <label class="f" for="lang">Answer language</label>
+  <select id="lang"><option value="English">English</option><option value="Thai">ไทย (Thai)</option></select>
+  <button class="btn" id="btn-save" style="width:100%;margin:12px 0 0">Save</button>
+ </div>
+ <div class="card">
+  <label class="check"><input type="checkbox" id="demo"> <span><b>Demo mode</b><br><span class="small">Use a sample answer instead of calling Gemini. For showing the app without a key. Answers are labelled DEMO.</span></span></label>
+  <label class="f" for="demosample">Demo answer</label>
+  <select id="demosample"><option value="bottle">Plastic water bottle (high confidence)</option><option value="cup">Iced-tea cup, many parts (medium)</option><option value="leaf">Banana-leaf wrapper (high)</option><option value="blurry">Blurry photo (low confidence)</option></select>
+ </div>
+ <div class="card">
+  <b>Your data</b>
+  <p class="small" id="datainfo" style="margin-top:4px"></p>
+  <button class="btn grey" id="btn-wipe" style="width:100%;margin:10px 0 0">Delete all my data</button>
+ </div>
+ <p class="small center" style="margin:6px 20px">Bin colours follow the Thai standard (blue general, green organic, yellow recyclable, red hazardous). MFU's own bin labels still need to be confirmed.</p>
+</section>
+
+<nav id="nav">
+ <button data-go="home" class="on"><b>🏡</b>Home</button>
+ <button data-go="scan"><b>📷</b>Scan</button>
+ <button data-go="board"><b>🏆</b>Dorms</button>
+ <button data-go="settings"><b>⚙️</b>Me</button>
+</nav>
+<div class="toast" id="toast"></div>
+</div>
+<script src="app.js"></script>
+</body></html>
